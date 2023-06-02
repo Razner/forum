@@ -3,22 +3,34 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"text/template"
 )
 
 const port = ":8080"
 
 func Home(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello World")
+	renderTemplate(w, "home")
 }
 
-func Test(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "test")
+func About(w http.ResponseWriter, r *http.Request) {
+	renderTemplate(w, "about")
+}
+
+func renderTemplate(w http.ResponseWriter, tmpl string) {
+	t, err := template.ParseFiles("../templates/" + tmpl + ".page.tmpl")
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	t.Execute(w, nil)
+
 }
 
 func main() {
-	fmt.Println("http://localhost:8080")
 	http.HandleFunc("/", Home)
-	http.HandleFunc("/test", Test)
+	http.HandleFunc("/about", About)
+	fmt.Println("serveur start on : http://localhost:8080")
 	http.ListenAndServe(port, nil)
 
 }
