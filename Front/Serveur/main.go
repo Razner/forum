@@ -21,7 +21,7 @@ func renderTemplate(w http.ResponseWriter, tmpl string) {
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		return 
 	}
 	t.Execute(w, nil)
 
