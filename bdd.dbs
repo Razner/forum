@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="dbs.sql" id="Project-82a" database="MySql" >
+	<schema name="public" >
+		<table name="Categories" spec="" >
+			<column name="ID" type="INT" jt="4" mandatory="y" />
+			<column name="NameCategories" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<index name="pk_categories" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+		</table>
+		<table name="Comments" spec="" >
+			<column name="ID" type="INT" jt="4" mandatory="y" />
+			<column name="ID_Users" type="INT" jt="4" />
+			<column name="ID_Posts" type="INT" jt="4" />
+			<column name="MessageContent" type="VARCHAR" length="500" jt="12" />
+			<column name="DateComment" type="DATETIME" jt="93" />
+			<index name="pk_comments" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<fk name="fk_Comments Users" to_schema="public" to_table="Users" options="" >
+				<fk_column name="ID_Users" pk="ID" />
+			</fk>
+			<fk name="fk_Comments Posts" to_schema="public" to_table="Posts" options="" >
+				<fk_column name="ID_Posts" pk="ID" />
+			</fk>
+		</table>
+		<table name="Likes" spec="" >
+			<column name="ID" type="INT" jt="4" mandatory="y" />
+			<column name="ID_Comments" type="INT" jt="4" />
+			<column name="ID_Users" type="INT" jt="4" />
+			<column name="ID_Posts" type="INT" jt="4" />
+			<column name="DateLike" type="TIMESTAMP" jt="93" />
+			<index name="pk_likes" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<fk name="fk_Likes Comments" to_schema="public" to_table="Comments" options="" >
+				<fk_column name="ID_Comments" pk="ID" />
+			</fk>
+			<fk name="fk_Likes Users" to_schema="public" to_table="Users" options="" >
+				<fk_column name="ID_Users" pk="ID" />
+			</fk>
+			<fk name="fk_Likes Posts" to_schema="public" to_table="Posts" options="" >
+				<fk_column name="ID_Posts" pk="ID" />
+			</fk>
+		</table>
+		<table name="Posts" spec="" >
+			<column name="ID" type="INT" jt="4" mandatory="y" />
+			<column name="ID_Users" type="INT" jt="4" />
+			<column name="ID_Comments" type="INT" jt="4" />
+			<column name="ID_Categories" type="INT" jt="4" />
+			<column name="ID_Likes" type="INT" jt="4" />
+			<index name="pk_posts" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+			<fk name="fk_Posts Users" to_schema="public" to_table="Users" options="" >
+				<fk_column name="ID_Users" pk="ID" />
+			</fk>
+			<fk name="fk_Posts Comments" to_schema="public" to_table="Comments" options="" >
+				<fk_column name="ID_Comments" pk="ID" />
+			</fk>
+			<fk name="fk_Posts Categories" to_schema="public" to_table="Categories" options="FOREIGN KEY (ID_Likes) REFERENCES Likes(ID)" >
+				<fk_column name="ID_Categories" pk="ID" />
+			</fk>
+		</table>
+		<table name="Users" spec="" >
+			<column name="ID" type="INT" jt="4" mandatory="y" />
+			<column name="Pseudo" type="VARCHAR" length="24" jt="12" mandatory="y" />
+			<column name="Psw" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="Email" type="VARCHAR" length="100" jt="12" mandatory="y" />
+			<index name="pk_users" unique="PRIMARY_KEY" >
+				<column name="ID" />
+			</index>
+		</table>
+	</schema>
+	<connector name="MyDb" database="MySql" host="localhost" port="3306" user="root" useSystemProxy="false" />
+	<layout name="Layout" id="Layout-270" show_relation="columns" >
+		<entity schema="public" name="Categories" color="BED3F4" x="416" y="272" />
+		<entity schema="public" name="Comments" color="BED3F4" x="880" y="48" />
+		<entity schema="public" name="Likes" color="BED3F4" x="880" y="272" />
+		<entity schema="public" name="Posts" color="BED3F4" x="656" y="48" />
+		<entity schema="public" name="Users" color="BED3F4" x="656" y="272" />
+		<callout x="48" y="176" pointer="Round" >
+			<comment><![CDATA[Add tables to the layout diagram (here) by drag & drop from the Project Tree.
+Drop this callout from its right-click pop-up.]]></comment>
+		</callout>
+	</layout>
+</project>
