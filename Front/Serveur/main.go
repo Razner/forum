@@ -2,35 +2,60 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"net/http"
-	"text/template"
 )
 
-const port = ":8080"
-
-func Home(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, "home")
+type Message struct {
+	Username string
+	Content  string
 }
 
-func About(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, "about")
-}
+var messages []Message
 
-func renderTemplate(w http.ResponseWriter, tmpl string) {
-	t, err := template.ParseFiles("../templates/" + tmpl + ".page.tmpl")
-
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+func SendMessage(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
-	t.Execute(w, nil)
 
+	username := r.FormValue("username")
+	content := r.FormValue("content")
+
+	message := Message{
+		Username: username,
+		Content:  content,
+	}
+
+	messages = append(messages, message)
+
+	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
+
+func general(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("../templates/general.page.tmpl"))
+
+	tmpl.Execute(w, nil)
+}
+
+func MP(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("../templates/mp.page.tmpl"))
+
+	data := struct {
+		Messages []Message
+	}{
+		Messages: messages,
+	}
+
+	tmpl.Execute(w, data)
 }
 
 func main() {
-	http.HandleFunc("/", Home)
-	http.HandleFunc("/about", About)
-	fmt.Println("serveur start on : http://localhost:8080")
-	http.ListenAndServe(port, nil)
-
+	assets := http.FileServer(http.Dir("../assets"))
+	http.Handle("/assets/", http.StripPrefix("/assets/", assets))
+	http.HandleFunc("/", general)
+	http.HandleFunc("/send", SendMessage)
+	http.HandleFunc("/mp", MP)
+	fmt.Println("Serveur démarré sur : http://localhost:8080")
+	http.ListenAndServe(":8080", nil)
 }

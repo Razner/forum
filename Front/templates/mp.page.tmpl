@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Forum</title>
+	<link rel="stylesheet" href="../assets/css/mp.csss">
+</head>
+<body>
+	<h1>Forum</h1>
+
+	<form action="/send" method="POST">
+		<label for="username">Nom d'utilisateur :</label>
+		<input type="text" name="username" id="username" required><br><br>
+
+		<label for="content">Message :</label>
+		<textarea name="content" id="content" rows="4" cols="50" required></textarea><br><br>
+
+		<input type="submit" value="Envoyer">
+	</form>
+
+	<hr>
+
+	{{range .Messages}}
+		<p><strong>{{.Username}} :</strong> {{.Content}}</p>
+	{{end}}
+</body>
+</html>
