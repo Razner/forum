@@ -4,12 +4,42 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="../assets/css/header.css">
+    <title>For'Rhum Arrangé</title>
     <link rel="stylesheet" href="../assets/css/general.css">
+    <link rel="shortcut icon" href="../assets/images/rhum.png">
 </head>
 <body>
-    <h1>General
-    </h1>
-    
+    <div class="header">
+        <div class="title">
+            <img id="logo" src="../assets/images/logo.png" alt="logo" onclick="toggleMenu()">
+            <a href="general" id="title-site"><h1>For'Rhum Arrangé</h1></a>
+            <img id="info" src="../assets/images/info.png">
+            <img id="msg" src="../assets/images/msg.png" alt="msg">
+            <img id="profil-img" src="../assets/images/profil.png" alt="profil">
+        </div>
+    </div>
+    <div class="categorie" onclick="toggleMenu()">
+        <div class="title-categorie">
+            <h2>Catégorie</h2>
+        </div>
+    </div> 
+    <div class="search-results">
+        <div class="search-container">
+        <form action="/search">
+            <div class="search">
+                <input type="text" id="search" placeholder="Rechercher...">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </div>
+        </form>
+      </div>
+    </div>
+    <script>
+        function toggleMenu() {
+          const menu = document.querySelector('.categorie');
+          menu.classList.toggle('open');
+        }
+    </script>
+    <script src="searchBar.js"></script>
 </body>
 </html>

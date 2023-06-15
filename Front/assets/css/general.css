@@ -1,3 +1,69 @@
-h1{
-    color: aqua;
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+* {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
 }
+
+body {
+    background-color: #f3ca20;
+}
+
+.categorie {
+    border-top: #f3ca20 solid 5px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 15vw;
+    background-color: black;
+    position: fixed;
+    left: -290px;
+    transition: left 0.3s;
+} 
+
+.categorie.open {
+    left: 0;
+}
+
+.title-categorie {
+    display: flex;
+    color: #f3ca20;
+    justify-content: center;
+    padding-top: 15%;
+}
+
+.search-container { 
+    display: flex;
+    justify-content: end;
+    padding-top: 5%;
+    padding-right: 8%;
+}
+
+.search {
+    display: flex;
+    justify-content: end;
+    border: 1px solid black;
+}
+
+input {
+    width: 100%;
+    padding: 5px;
+    border: none;
+    font-size: 15px;
+}
+
+.search-container button[type="submit"] {
+    background-color: white;
+    background-image: url("../images/loupe.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-left: 1px solid black;
+  }  
+  
