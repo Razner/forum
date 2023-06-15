@@ -38,6 +38,18 @@ func general(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, nil)
 }
 
+func login(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("../templates/login.page.tmpl"))
+
+	tmpl.Execute(w, nil)
+}
+
+func register(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("../templates/register.page.tmpl"))
+
+	tmpl.Execute(w, nil)
+}
+
 func MP(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("../templates/mp.page.tmpl"))
 
@@ -54,6 +66,8 @@ func main() {
 	assets := http.FileServer(http.Dir("../assets"))
 	http.Handle("/assets/", http.StripPrefix("/assets/", assets))
 	http.HandleFunc("/", general)
+	http.HandleFunc("/login", login)
+	http.HandleFunc("/register", register)
 	http.HandleFunc("/send", SendMessage)
 	http.HandleFunc("/mp", MP)
 	fmt.Println("Serveur démarré sur : http://localhost:8080")
