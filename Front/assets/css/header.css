@@ -22,12 +22,17 @@
     gap: 30px;
 }
 
+#logo {
+    height: 3%;
+    width: 3%;
+}
+
 #title-site {
     margin-right: 65%;
 }
 
 #info {
-    padding-top: 0.5%;
+    padding-top: 0.6%;
     height: 2%;
     width: 2%;
 }
