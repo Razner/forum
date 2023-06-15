@@ -32,3 +32,38 @@ body {
     justify-content: center;
     padding-top: 15%;
 }
+
+.search-container { 
+    display: flex;
+    justify-content: end;
+    padding-top: 5%;
+    padding-right: 8%;
+}
+
+.search {
+    display: flex;
+    justify-content: end;
+    border: 1px solid black;
+}
+
+input {
+    width: 100%;
+    padding: 5px;
+    border: none;
+    font-size: 15px;
+}
+
+.search-container button[type="submit"] {
+    background-color: white;
+    background-image: url("../images/loupe.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-left: 1px solid black;
+  }  
+  

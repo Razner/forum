@@ -24,11 +24,22 @@
             <h2>Catégorie</h2>
         </div>
     </div> 
+    <div class="search-results">
+        <div class="search-container">
+        <form action="/search">
+            <div class="search">
+                <input type="text" id="search" placeholder="Rechercher...">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </div>
+        </form>
+      </div>
+    </div>
     <script>
         function toggleMenu() {
           const menu = document.querySelector('.categorie');
           menu.classList.toggle('open');
         }
     </script>
+    <script src="searchBar.js"></script>
 </body>
 </html>
