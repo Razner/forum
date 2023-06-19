@@ -1,0 +1,44 @@
+* {
+  background-color: tomato;
+}
+
+#like-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+#like-button img {
+  width: 30px; /* Ajustez la taille selon vos besoins */
+}
+
+#like-button:hover img {
+  opacity: 0.8; /* Réduire l'opacité lors du survol */
+}
+
+#like-button:active img {
+  transform: scale(0.9); /* Réduire légèrement la taille lors du clic */
+}
+
+#dislike-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+#dislike-button img {
+  width: 30px; /* Ajustez la taille selon vos besoins */
+}
+
+#dislike-button:hover img {
+  opacity: 0.8; /* Réduire l'opacité lors du survol */
+}
+
+#dislike-button:active img {
+  transform: scale(0.9); /* Réduire légèrement la taille lors du clic */
+}
+
+
+

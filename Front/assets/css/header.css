@@ -14,7 +14,6 @@
 }
 
 .title {
-    color: #f3ca20;
     display: flex;
     padding-top: 1%;
     padding-right: 5%;
@@ -22,18 +21,25 @@
     gap: 30px;
 }
 
+#logo {
+    height: 3%;
+    width: 3%;
+}
+
 #title-site {
     margin-right: 65%;
+    margin-top: 0.2%;
+    text-decoration: none;
+    color: #f3ca20;
 }
 
 #info {
-    padding-top: 0.5%;
+    padding-top: 0.6%;
     height: 2%;
     width: 2%;
 }
 
 #profil-img {
-    padding-bottom: 1%;
     height: 3%;
     width: 3%;
 }

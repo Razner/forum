@@ -12,6 +12,17 @@ type Message struct {
 }
 
 var messages []Message
+var isLiked = false
+
+func likePost(w http.ResponseWriter, r *http.Request) {
+	if isLiked {
+		isLiked = false
+		fmt.Fprintf(w, "Post unliked")
+	} else {
+		isLiked = true
+		fmt.Fprintf(w, "Post liked")
+	}
+}
 
 func SendMessage(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
@@ -63,6 +74,7 @@ func MP(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	http.HandleFunc("/like", likePost)
 	assets := http.FileServer(http.Dir("../assets"))
 	http.Handle("/assets/", http.StripPrefix("/assets/", assets))
 	http.HandleFunc("/", general)

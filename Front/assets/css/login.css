@@ -48,3 +48,7 @@ input[type="submit"]:hover {
     font-weight: bold;
     cursor: pointer;
 }
+
+#register {
+    color: black;
+}
