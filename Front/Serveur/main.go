@@ -36,7 +36,7 @@ func SendMessage(w http.ResponseWriter, r *http.Request) {
 
 	messages = append(messages, message)
 
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	http.Redirect(w, nil, "/", http.StatusSeeOther)
 }
 
 func general(w http.ResponseWriter, r *http.Request) {
@@ -87,7 +87,7 @@ func main() {
 	r.HandleFunc("/api/register", registerUser).Methods("POST")
 
 	fmt.Println("Serveur démarré sur : http://localhost:8000")
-	log.Fatal(http.ListenAndServe(":8000", r))
+	log.Fatal(http.ListenAndServe(":8000", nil))
 }
 
 type User struct {
@@ -142,7 +142,7 @@ func DataBase() {
 	defer db.Close()
 
 	// Lecture du fichier SQL
-	sqlScript, err := ioutil.ReadFile("forum.sqlite")
+	sqlScript, err := ioutil.ReadFile("forum.sql")
 	if err != nil {
 		log.Fatal(err)
 	}
