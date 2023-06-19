@@ -27,15 +27,31 @@
     <div class="search-pub">
         <div class="search-container">
             <div class="publication">
-                <button id="pub">Créer une publication</button>
-            </div>
+                <form id="form-pub" action="/create" method="post" enctype="multipart/form-data">
+                    <input id="input-title" type="text" name="title" placeholder="Titre du post" required>
+                    <textarea id="resize" name="content" placeholder="Contenu du post" required></textarea>
+                    <input id="input-img" type="file" name="image">
+                    <button id="btn-pub" type="submit">Créer</button>
+                </form>
+            </div>      
         <form action="/search">
             <div class="search">
                 <input type="text" id="search" placeholder="Rechercher...">
-                <button type="submit"><i class="fa fa-search"></i></button>
+                <button id="btn-search" type="submit"><i class="fa fa-search"></i></button>
             </div>
         </form>
       </div>
+    </div>
+    <div class="posts">
+        {{range .Posts}}
+            <div class="post-box">
+                <h3 class="post-title">{{.Title}}</h3>
+                <p class="post-content">{{.Content}}</p>
+                {{if ne .Image ""}}
+                    <img class="post-image" src="{{.Image}}" alt="image">
+                {{end}}
+            </div>
+        {{end}}
     </div>
     <script>
         function toggleMenu() {
@@ -43,6 +59,15 @@
           menu.classList.toggle('open');
         }
     </script>
+    <script>
+        document.querySelector("form").addEventListener("submit", function(event) {
+            var content = document.querySelector("textarea[name='content']").value;
+            if (content.length > 300) {
+                alert("Le contenu doit contenir au maximum 300 caractères");
+                event.preventDefault();
+            }
+        });
+    </script>   
     <script src="searchBar.js"></script>
 </body>
 </html>
