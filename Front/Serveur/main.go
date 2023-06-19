@@ -1,9 +1,16 @@
 package main
 
 import (
+	"database/sql"
+	"encoding/json"
 	"fmt"
 	"html/template"
+	"io/ioutil"
+	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
+	_ "github.com/mattn/go-sqlite3" // Import SQLite driver
 )
 
 type Message struct {
@@ -12,17 +19,6 @@ type Message struct {
 }
 
 var messages []Message
-var isLiked = false
-
-func likePost(w http.ResponseWriter, r *http.Request) {
-	if isLiked {
-		isLiked = false
-		fmt.Fprintf(w, "Post unliked")
-	} else {
-		isLiked = true
-		fmt.Fprintf(w, "Post liked")
-	}
-}
 
 func SendMessage(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
@@ -40,7 +36,7 @@ func SendMessage(w http.ResponseWriter, r *http.Request) {
 
 	messages = append(messages, message)
 
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	http.Redirect(w, nil, "/", http.StatusSeeOther)
 }
 
 func general(w http.ResponseWriter, r *http.Request) {
@@ -74,7 +70,8 @@ func MP(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/like", likePost)
+	DataBase()
+
 	assets := http.FileServer(http.Dir("../assets"))
 	http.Handle("/assets/", http.StripPrefix("/assets/", assets))
 	http.HandleFunc("/", general)
@@ -82,6 +79,78 @@ func main() {
 	http.HandleFunc("/register", register)
 	http.HandleFunc("/send", SendMessage)
 	http.HandleFunc("/mp", MP)
-	fmt.Println("Serveur démarré sur : http://localhost:8080")
-	http.ListenAndServe(":8080", nil)
+
+	// Initialisez le routeur Gorilla Mux
+	r := mux.NewRouter()
+
+	// Définissez la route pour l'enregistrement d'utilisateur
+	r.HandleFunc("/api/register", registerUser).Methods("POST")
+
+	fmt.Println("Serveur démarré sur : http://localhost:8000")
+	log.Fatal(http.ListenAndServe(":8000", nil))
+}
+
+type User struct {
+	ID     int    `json:"id"`
+	Pseudo string `json:"pseudo"`
+	Psw    string `json:"psw"`
+	Email  string `json:"email"`
+}
+
+// Handler pour l'enregistrement d'utilisateur
+func registerUser(w http.ResponseWriter, r *http.Request) {
+	// Parsez les données JSON de la demande
+	var user User
+	err := json.NewDecoder(r.Body).Decode(&user)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// Insérez les données d'utilisateur dans la base de données
+	db, err := sql.Open("sqlite3", "./forum.db")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer db.Close()
+
+	statement, err := db.Prepare("INSERT INTO Users (Pseudo, Psw, Email) VALUES (?, ?, ?)")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer statement.Close()
+
+	_, err = statement.Exec(user.Pseudo, user.Psw, user.Email)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// Répondez avec un message de succès
+	response := map[string]string{"message": "Enregistrement réussi"}
+	json.NewEncoder(w).Encode(response)
+}
+
+func DataBase() {
+	// Ouvrir la connexion à la base de données SQLite
+	db, err := sql.Open("sqlite3", "forum.db")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	// Lecture du fichier SQL
+	sqlScript, err := ioutil.ReadFile("forum.sql")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Exécution des requêtes SQL
+	_, err = db.Exec(string(sqlScript))
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Création des tables réussie.")
 }
