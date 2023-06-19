@@ -33,11 +33,25 @@ body {
     padding-top: 15%;
 }
 
+#pub {
+    width: 10vw;
+    border: 1px solid black;
+    font-size: 15px;
+    height: 100%;
+    background-color: white;
+}
+
+#pub:hover {
+    background-color: #f3ca20;
+    color: white;
+}
+
 .search-container { 
     display: flex;
     justify-content: end;
     padding-top: 5%;
     padding-right: 8%;
+    gap: 50px;
 }
 
 .search {
