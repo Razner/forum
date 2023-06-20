@@ -113,7 +113,6 @@ input {
     cursor: pointer;
     border-left: 1px solid black;
   }  
-
 .posts {
     display: flex;
     flex-wrap: wrap;
