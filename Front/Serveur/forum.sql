@@ -1,7 +1,6 @@
 -- Table : Users
 CREATE TABLE IF NOT EXISTS Users (
     ID INTEGER PRIMARY KEY,
-    Pseudo TEXT NOT NULL,
     Psw TEXT NOT NULL,
     Email TEXT NOT NULL
 );
