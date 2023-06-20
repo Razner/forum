@@ -14,17 +14,17 @@
         <div class="title">
             <img id="logo" src="../assets/images/logo.png" alt="logo">
             <a href="general" id="title-site"><h1>For'Rhum Arrangé</h1></a>
-            <img id="info" src="../assets/images/info.png">
-            <img id="msg" src="../assets/images/msg.png" alt="msg">
-            <img id="profil-img" src="../assets/images/profil.png" alt="profil">
+            <img id="info" src="../assets/images/info.png" onclick="page('about')">
+            <img id="msg" src="../assets/images/msg.png" alt="msg" onclick="page('mp')">
+            <img id="profil-img" src="../assets/images/profil.png" alt="profil" onclick="page('login')">
         </div>
     </div>
     <div class="login">
         <div class="title-login"><img id="rhum" src="../assets/images/verre.png" alt="verre"><h1>For'Rhum</h1></div>
-        <form action="">
+        <form action="/login" method="POST">
             <div class="input">
-                <label for="email"></label>
-                <input type="email" name="email" id="email" placeholder="Email">
+                <label for="pseudo"></label>
+                <input type="pseudo" name="pseudo" id="pseudo" placeholder="Pseudo">
             </div>
             <div class="input">
                 <label for="password"></label>
@@ -38,5 +38,10 @@
             </div>
         </form>
     </div>
+    <script>
+        function page(page) {
+            window.location.href = page;
+        }
+    </script>
 </body>
 </html>

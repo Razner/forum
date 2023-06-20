@@ -14,9 +14,9 @@
         <div class="title">
             <img id="logo" src="../assets/images/logo.png" alt="logo" onclick="toggleMenu()">
             <a href="general" id="title-site"><h1>For'Rhum Arrangé</h1></a>
-            <img id="info" src="../assets/images/info.png">
-            <img id="msg" src="../assets/images/msg.png" alt="msg">
-            <img id="profil-img" src="../assets/images/profil.png" alt="profil">
+            <img id="info" src="../assets/images/info.png" onclick="page('about')">
+            <img id="msg" src="../assets/images/msg.png" alt="msg" onclick="page('mp')">
+            <img id="profil-img" src="../assets/images/profil.png" alt="profil" onclick="page('login')">
         </div>
     </div>
     <div class="categorie" onclick="toggleMenu()">
@@ -57,6 +57,11 @@
         function toggleMenu() {
           const menu = document.querySelector('.categorie');
           menu.classList.toggle('open');
+        }
+    </script>
+    <script>
+        function page(page) {
+            window.location.href = page;
         }
     </script>
     <script>
