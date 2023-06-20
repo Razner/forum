@@ -14,9 +14,9 @@
         <div class="title">
             <img id="logo" src="../assets/images/logo.png" alt="logo" onclick="toggleMenu()">
             <a href="general" id="title-site"><h1>For'Rhum Arrangé</h1></a>
-            <img id="info" src="../assets/images/info.png">
-            <img id="msg" src="../assets/images/msg.png" alt="msg">
-            <img id="profil-img" src="../assets/images/profil.png" alt="profil">
+            <img id="info" src="../assets/images/info.png" onclick="page('about')">
+            <img id="msg" src="../assets/images/msg.png" alt="msg" onclick="page('mp')">
+            <img id="profil-img" src="../assets/images/profil.png" alt="profil" onclick="page('login')">
         </div>
     </div>
     <div class="categorie" onclick="toggleMenu()">
@@ -24,15 +24,34 @@
             <h2>Catégorie</h2>
         </div>
     </div> 
-    <div class="search-results">
+    <div class="search-pub">
         <div class="search-container">
+            <div class="publication">
+                <form id="form-pub" action="/create" method="post" enctype="multipart/form-data">
+                    <input id="input-title" type="text" name="title" placeholder="Titre du post" required>
+                    <textarea id="resize" name="content" placeholder="Contenu du post" required></textarea>
+                    <input id="input-img" type="file" name="image">
+                    <button id="btn-pub" type="submit">Créer</button>
+                </form>
+            </div>      
         <form action="/search">
             <div class="search">
                 <input type="text" id="search" placeholder="Rechercher...">
-                <button type="submit"><i class="fa fa-search"></i></button>
+                <button id="btn-search" type="submit"><i class="fa fa-search"></i></button>
             </div>
         </form>
       </div>
+    </div>
+    <div class="posts">
+        {{range .Posts}}
+            <div class="post-box">
+                <h3 class="post-title">{{.Title}}</h3>
+                <p class="post-content">{{.Content}}</p>
+                {{if ne .Image ""}}
+                    <img class="post-image" src="{{.Image}}" alt="image">
+                {{end}}
+            </div>
+        {{end}}
     </div>
     <script>
         function toggleMenu() {
@@ -40,6 +59,20 @@
           menu.classList.toggle('open');
         }
     </script>
+    <script>
+        function page(page) {
+            window.location.href = page;
+        }
+    </script>
+    <script>
+        document.querySelector("form").addEventListener("submit", function(event) {
+            var content = document.querySelector("textarea[name='content']").value;
+            if (content.length > 300) {
+                alert("Le contenu doit contenir au maximum 300 caractères");
+                event.preventDefault();
+            }
+        });
+    </script>   
     <script src="searchBar.js"></script>
 </body>
 </html>
