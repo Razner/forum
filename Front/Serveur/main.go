@@ -5,11 +5,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"io"
 	"io/ioutil"
 	"log"
-	"io"
 	"net/http"
 	"os"
+
 	"github.com/google/uuid"
 
 	"github.com/gorilla/mux"
@@ -139,7 +140,23 @@ func login(w http.ResponseWriter, r *http.Request) {
 
 func register(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("../templates/register.page.tmpl"))
+	email := r.FormValue("email")
+	psw := r.FormValue("password")
+	db, err := sql.Open("sqlite3", "forum.db")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	request, err := db.Prepare("INSERT INTO Users (Psw,Email) VALUES(?,?)")
+	if err != nil {
+		fmt.Println(err)
+		fmt.Println("error Prepare new user")
+		return
+	}
+	request.Exec(email, psw)
+	db.Close()
 
+	fmt.Println("OK")
 	tmpl.Execute(w, nil)
 }
 

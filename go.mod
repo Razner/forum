@@ -7,4 +7,4 @@ require (
 	github.com/mattn/go-sqlite3 v2.0.3+incompatible
 )
 
-require github.com/google/uuid v1.3.0 // indirect
+require github.com/google/uuid v1.3.0
